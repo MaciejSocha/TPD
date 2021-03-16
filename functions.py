@@ -33,38 +33,48 @@ def loss_table(matrix: list) -> list:
     return result
 
 
-def mini_maks(matrix: list) -> float:
+def mini_maks(matrix: list) -> tuple:
     matrix = cut_name(matrix)
     min_list = []
+    result_index = []
     for mini in matrix:
         min_list.append(min(mini))
+    for i, num in enumerate(min_list):
+        if num == max(min_list):
+            result_index.append(i+1)
+    return min_list, result_index
 
-    return max(min_list)
 
-
-def maks_maks(matrix: list) -> float:
+def maks_maks(matrix: list) -> tuple:
     matrix = cut_name(matrix)
     maks_list = []
+    result_index = []
     for maks in matrix:
         maks_list.append(max(maks))
-
-    return max(maks_list)
+    for i, num in enumerate(maks_list):
+        if num == max(maks_list):
+            result_index.append(i+1)
+    return maks_list, result_index
 
 
 def k_hurwicz(matrix: list, factor: float = 0.5) -> tuple:
     matrix = cut_name(matrix)
     result = []
     factor = float(factor)
+    result_index = []
     for line in matrix:
         result.append(factor * float(min(line)) + (1 - factor) * float(max(line)))
-    return result, max(result)
+    for i, num in enumerate(result):
+        if num == max(result):
+            result_index.append(i+1)
+    return result, result_index
 
 
 def k_bayesa(matrix: list, *args) -> tuple:
     matrix = cut_name(matrix)
     probability = []
     result = []
-
+    result_index = []
     for x in args:
         probability.append(x)
     for line in matrix:
@@ -72,37 +82,21 @@ def k_bayesa(matrix: list, *args) -> tuple:
         for x in range(len(line)):
             v += float(probability[x]) * float(line[x])
         result.append(v)
-
-    return result, max(result)
+    for i, num in enumerate(result):
+        if num == max(result):
+            result_index.append(i + 1)
+    return result, result_index
 
 
 def k_savage(matrix: list) -> tuple:
     matrix = cut_name(matrix)
     matrix = loss_table(matrix)
     result = []
+    result_index = []
     for line in matrix:
         result.append(max(line))
+    for i, num in enumerate(result):
+        if num == max(result):
+            result_index.append(i + 1)
+    return result, result_index
 
-    return result, max(result)
-
-
-def find_in_matrix(matrix: list, value: float) -> list:
-    result = []
-    for line in matrix:
-        for i in range(len(line)):
-            if float(line[i]) == float(value):
-                result.append(line[0])
-    return result
-
-
-def find_in_result(result: tuple) -> float:
-    return result[0].index(result[1])
-
-
-
-#m = load_data()
-#print(find_in_matrix(m, mini_maks(m)))
-##print(find_in_matrix(m, maks_maks(m)))
-#print(find_in_result(k_hurwicz(m)))
-#print(find_in_result(k_bayesa(m, 1/2, 1/2, 1/2, 1/2)))
-#print(k_savage(m))
