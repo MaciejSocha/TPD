@@ -19,9 +19,9 @@ def cut_name(matrix: list) -> list:
 
 
 def loss_table(matrix: list) -> list:
-    print(matrix)
+    #print(matrix)
     result = []
-
+    matrix = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
     for x in range(0, len(matrix)):
         maks_list = []
         help = []
@@ -30,6 +30,7 @@ def loss_table(matrix: list) -> list:
         for y in range(0, len(matrix[x])):
             help.append(float(max(maks_list)) - float(matrix[x][y]))
         result.append(help)
+	result = [[result[j][i] for j in range(len(result))] for i in range(len(result[0]))]
     return result
 
 
@@ -96,7 +97,7 @@ def k_savage(matrix: list) -> tuple:
     for line in matrix:
         result.append(max(line))
     for i, num in enumerate(result):
-        if num == max(result):
+        if num == min(result):
             result_index.append(i + 1)
     return result, result_index
 

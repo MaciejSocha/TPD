@@ -70,9 +70,9 @@ while not exit:
         input("WCISNIJ ENTER ABY COFNĄĆ")
     elif option == '4':
         prob = []
-        for i in range(len(m)):
+        for i in range(len(m[0])-1):
             prob.append(input("Podaj prawdopodobieństwo dla {} stanu: ".format(i+1)))
-        print_k_bayesa(f.k_bayesa(m, 1/2, 1/2, 1/2, 1/2), prob)
+        print_k_bayesa(f.k_bayesa(m, *prob), prob)
         input("WCISNIJ ENTER ABY COFNĄĆ")
     elif option == '5':
         print_k_savage(f.k_savage(m))
